@@ -1,0 +1,131 @@
+<%- include('partials/header'); -%>
+  <%- include('partials/nav'); -%>
+  <main id="main">
+  
+    <!-- ======= Breadcrumbs ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+  
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>
+            <%= title%>
+          </h2>
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>
+              <%= title%>
+            </li>
+          </ol>
+        </div>
+  
+      </div>
+    </section><!-- End Breadcrumbs -->
+  
+    <section class="inner-page">
+      <div class="container">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Add
+          a New Question</button>
+        
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Add a new Question</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="questiontitle" class="col-form-label">Question Title</label>
+                    <input type="text" class="form-control" id="questiontitle" name="questiontitle">
+                  </div>
+                  <div class="form-group">
+                    <label for="questiontype" class="col-form-label">Question Type:</label>
+                    <select id="questiontype" name="questiontype">
+                      <% if (list.length> 0) { %>
+                        <% list.forEach(category=> { %>
+                          <option value="<%= category.title%>">
+                            <%= category.title%>
+                          </option>
+                          <% }) %>
+                            <% } %>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="questionbody" class="col-form-label">Question:</label>
+                    <textarea class="form-control" id="questionbody" name="questionbody"></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <input type="submit" class="btn btn-primary" value="Add Question">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="blogs content">
+          <h2>All Categories</h2>
+          
+          <% if (list.length> 0) { %>
+            <% list.forEach(category=> { %>
+              <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
+                <div class="icon-box iconbox-orange ">
+                  <img src="data:image/<%=category.img.contentType%>;base64,<%=category.img.data.toString('base64')%>" class="img-fluid"
+                    alt="">
+                  <h4><a href="/programming/<%= category.title %>">
+                      <%= category.title %>
+                    </a></h4>
+                  <p>
+                    <%= category.description%> 
+                  </p>
+                </div>
+              </div>
+              <% }) %>
+                <% } else { %>
+                  <p>There are no categories to display...</p>
+                  <% } %>
+        
+        </div>
+      </div>
+    </section>
+  
+  </main><!-- End #main -->
+    
+    <%- include('partials/footer'); -%>
+
+      <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+
+          const title = form.questiontitle.value;
+          const type = form.questiontype.value;
+          const body = form.questionbody.value;
+
+          console.log(title, type, body);
+          try {
+            const res = await fetch('/programming/qcreate', {
+              method: 'POST',
+              body: JSON.stringify({ title, type, body }),
+              headers: { 'Content-Type': 'application/json' }
+            });
+            const data = await res.json();
+            console.log(data);
+            if (data.ques) {
+              location.assign('/programming');
+            }
+            else {
+              location.assign('/programming');
+              document.write("error");
+            }
+          }
+          catch (err) {
+            console.log(err);
+          }
+        })
+      </script>

@@ -1,0 +1,48 @@
+<%- include('partials/header'); -%>
+    <link rel="stylesheet" href="/stylesBlog.css">
+    <%- include('partials/nav'); -%>
+
+    <main id="main">
+    
+        <!-- ======= Breadcrumbs ======= -->
+        <section class="breadcrumbs">
+            <div class="container">
+    
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2><%= title %></h2>
+                    <p>
+                        All Questions are here.
+                    </p>
+                    <ol>
+                        <li><a href="index.html">Home</a></li>
+                        <li><%= title %></li>
+                    </ol>
+                </div>
+    
+            </div>
+        </section><!-- End Breadcrumbs -->
+    
+        <section class="inner-page">
+            <div class="container">
+                <div class="blogs content">
+                    <% if (result.length> 0) { %>
+                        <% result.forEach(ques=> { %>
+                            <a class="single" href='/programming/<%= ques.category.title%>/<%= ques._id%>'>
+                                <h3 class="title">
+                                    <%= ques.title %>
+                                </h3>
+                                <p class="snippet">
+                                    <%= ques.title %>
+                                </p>
+                            </a>
+                            <% }) %>
+                                <% } else { %>
+                                    <p>There are no questions to display...</p>
+                                    <% } %>
+                </div>
+                </div>
+            </div>
+        </section>
+    
+    </main><!-- End #main -->
+<%- include('partials/footer'); -%>

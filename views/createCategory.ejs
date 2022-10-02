@@ -1,0 +1,46 @@
+<%- include('partials/header'); -%>
+  <%- include('partials/nav'); -%>
+    <link rel="stylesheet" href="/stylesBlog.css">
+
+    <main id="main">
+    
+      <!-- ======= Breadcrumbs ======= -->
+      <section class="breadcrumbs">
+        <div class="container">
+    
+          <div class="d-flex justify-content-between align-items-center">
+            <h2>
+              <%= title%>
+            </h2>
+            <ol>
+              <li><a href="/">Home</a></li>
+              <li>
+                <%= title%>
+              </li>
+            </ol>
+          </div>
+    
+        </div>
+      </section><!-- End Breadcrumbs -->
+    
+      <section class="inner-page">
+        <div class="container">
+          <div class="create-blog content">
+            <form action="/programming" method="POST" enctype="multipart/form-data">
+              <label for="title">Category title:</label>
+              <input type="text" id="title" name="title" required>
+              <label for="body">Description: </label>
+              <textarea id="body" name="body" required></textarea>
+              <label for="image">Upload Image: </label>
+              <input type="file" id="image" name="image" value="" required>
+              <button>Submit</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    
+    </main><!-- End #main -->
+
+    
+    <!-- we can also use fetch method to send post request -->
+    <%- include('partials/footer'); -%>

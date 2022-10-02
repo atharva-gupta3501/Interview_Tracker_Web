@@ -1,0 +1,140 @@
+<%- include('partials/header'); -%>
+    <%- include('partials/nav'); -%>
+
+        <main id="main">
+
+            <!-- ======= Breadcrumbs ======= -->
+            <section class="breadcrumbs">
+                <div class="container">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2>
+                            <%= title%>
+                        </h2>
+                        <ol>
+                            <li><a href="/">Home</a></li>
+                            <li>
+                                <%= title%>
+                            </li>
+                        </ol>
+                    </div>
+
+                </div>
+            </section><!-- End Breadcrumbs -->
+
+            <section class="inner-page">
+                <div class="container">
+                    <div class="container bootstrap snippet">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <h1>User name</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <form class="form" action="/profile" method="POST" enctype="multipart/form-data">
+                                <div class="col-sm-3">
+                                    <!--left col-->
+                                    <div class="text-center">
+                                        <img <% if(!user.img.data) { %>
+                                        src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                                        <% } else { %>
+                                            src="data:image/<%=user.img.contentType%>;base64,
+                                                <%=user.img.data.toString('base64')%>"
+                                                    <% } %>
+                                                        class="avatar img-circle img-thumbnail" alt="avatar">
+                                                        <h6>Upload a different photo...</h6>
+                                                        <input type="file" class="text-center center-block file-upload" id="image" name="image">
+                                    </div>
+                                </div>
+                                <!--/col-3-->
+                                <div class="col-sm-9">
+                                    <div class="tab-content">
+
+                                        <div class="form-group">
+
+                                            <div class="col-xs-6">
+                                                <label for="first_name">
+                                                    <h4>Name</h4>
+                                                </label>
+                                                <input type="text" class="form-control" name="fname"
+                                                    id="first_name" placeholder="name"
+                                                    title="enter your first name if any.">
+                                            </div>
+                                        </div>                                       
+
+                                        <div class="form-group">
+
+                                            <div class="col-xs-6">
+                                                <label for="phone">
+                                                    <h4>Year of Graduation</h4>
+                                                </label>
+                                                <!-- <input type="text" class="form-control" name="phone" id="phone"
+                                                    placeholder="enter phone" title="enter your phone number if any."> -->
+                                                    <select class="form-control" name="yog" id="yog">
+                                                        <option value=0>- Year of Graduation -</option>
+                                                        <option value=2024>2024</option>
+                                                        <option value=2023>2023</option>
+                                                        <option value=2022>2022</option>
+                                                        <option value=2021>2021</option>
+                                                        <option value=2020>2020</option>
+                                                        <option value=2019>2019</option>
+                                                        <option value=2018>2018</option>
+                                                        <option value=2017>2017</option>
+                                                        <option value=2016>2016</option>
+                                                        <option value=2015>2015</option>
+                                                        <option value=2014>2014</option>
+                                                        <option value=2013>2013</option>
+                                                        <option value=2012>2012</option>
+                                                    </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-xs-6">
+                                                <label for="mobile">
+                                                    <h4>Branch</h4>
+                                                </label>
+                                                <!-- <input type="text" class="form-control" name="mobile" id="mobile"
+                                                    placeholder="enter mobile number"
+                                                    title="enter your mobile number if any."> -->
+                                                    <select name="branch" id="branch" class="form-control" name="branch" id="branch">
+                                                        <option value="Not Provided">Branch</option>
+                                                        <option value="CSE">CSE</option>
+                                                        <option value="MnC">MnC</option>
+                                                        <option value="ECE">ECE</option>
+                                                        <option value="EEE">EEE</option>
+                                                        <option value="ME">ME</option>
+                                                        <option value="CE">CE</option>
+                                                        <option value="CST">CST</option>
+                                                        <option value="BSBE">BSBE</option>
+                                                    </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <br>
+                                                <button class="btn btn-lg" type="submit">
+                                                    Update</button>
+                                            </div>
+                                        </div>
+                            </form>
+
+
+
+
+                        </div>
+                        <!--/tab-content-->
+
+                    </div>
+                    <!--/col-9-->
+                </div>
+                <!--/row-->
+                </div>
+            </section>
+
+        </main><!-- End #main -->
+
+
+        <%- include('partials/footer'); -%>

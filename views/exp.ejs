@@ -1,0 +1,163 @@
+<%- include('partials/header'); -%>
+    <link rel="stylesheet" href="/exp.css">
+    <%- include('partials/nav'); -%>
+
+        <main id="main">
+
+            <!-- ======= Breadcrumbs ======= -->
+            <section class="breadcrumbs">
+                <div class="container">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2>
+                            <%= title%>
+                        </h2>
+                        <ol>
+                            <li><a href="/">Home</a></li>
+                            <li>
+                                <%= title%>
+                            </li>
+                        </ol>
+                    </div>
+
+                </div>
+            </section><!-- End Breadcrumbs -->
+
+            <section class="inner-page">
+                <div class="container">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                        data-whatever="@mdo">Add
+                        your Experience</button>
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="exampleModalLabel">Add your Experience</h3>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="company" class="col-form-label">Company Name:</label>
+                                            <select id="company" name="company">
+                                                <% if (companylist.length> 0) { %>
+                                                    <% companylist.forEach(company=> { %>
+                                                        <option value="<%= company._id%>">
+                                                            <%= company.title%>
+                                                        </option>
+                                                        <% }) %>
+                                                            <% } %>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="expbody" class="col-form-label">Write about your
+                                                experience:</label>
+                                            <textarea class="form-control" id="expbody" name="expbody"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <input type="submit" class="btn btn-primary" value="Add Experience">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <section class="section-medium section-arrow--bottom-center section-arrow-primary-color bg-primary">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 text-white text-center">
+                                    <h2 class="section-title ">Experiences</h2>
+                                    <p class="section-sub-title">
+                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis consequuntur
+                                        placeat molestiae provident? Quaerat at quod vel. Eum tenetur saepe minima
+                                        reiciendis repellat, beatae maxime ab, fugit eligendi similique vero!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="section-primary t-bordered">
+                        <div class="container">
+                            <div class="row testimonial-three testimonial-three--col-three">
+
+                                <% if (exps.length> 0) { %>
+                                    <% exps.forEach(exp=> { %>
+                                        <div class="col-md-4 testimonial-three-col">
+                                            <div class="testimonial-inner">
+                                                <div class="testimonial-image" itemprop="image">
+                                                        <img <% if(exp.user.img.data){ %>
+                                                        src= "data:image/<%=exp.user.img.contentType%>;base64,
+                                                            <%=exp.user.img.data.toString('base64')%>"
+                                                                <% }else{ %>
+                                                                    src="assets/img/testimonials/testimonials-1.jpg"
+                                                                    <%}%>
+                                                                        class="testimonial-img" alt="">
+                                                </div>
+                                                <div class="testimonial-content">
+                                                    <p>
+                                                        <%= exp.experience %>
+                                                    </p>
+                                                </div>
+                                                <div class="testimonial-meta">
+                                                    <strong class="testimonial-name" itemprop="name">
+                                                        <%= exp.user.fname %>
+                                                    </strong>
+                                                    <span class="testimonial-job-title" itemprop="jobTitle">
+                                                        <%= exp.company.title %>
+                                                    </span><a class="testimonial-link" href="#"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% }) %>
+                                            <% } else { %>
+                                                <p>There are no experiences yet...</p>
+                                                <% } %>
+
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </section>
+
+        </main><!-- End #main -->
+
+
+        <%- include('partials/footer'); -%>
+
+            <script>
+                const form = document.querySelector('form');
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const companyid = form.company.value;
+                    const body = form.expbody.value;
+
+                    try {
+                        const res = await fetch('/exp', {
+                            method: 'POST',
+                            body: JSON.stringify({ company: companyid, experience: body }),
+                            headers: { 'Content-Type': 'application/json' }
+                        });
+                        const data = await res.json();
+                        console.log(data);
+                        if (data.expe) {
+                            location.assign('/exp');
+                        }
+                        else {
+                            // location.assign('/programming');
+                            document.write("error");
+                        }
+                    }
+                    catch (err) {
+                        console.log(err);
+                    }
+                })
+            </script>

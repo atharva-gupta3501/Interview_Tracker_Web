@@ -1,0 +1,75 @@
+<%- include('partials/header'); -%>
+<link rel="stylesheet" href="/stylesBlog.css">
+<%- include('partials/nav'); -%>
+
+<main id="main">
+
+  <!-- ======= Breadcrumbs ======= -->
+  <section class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>
+          <%= title%>
+        </h2>
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li>
+            <%= title%>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+  </section><!-- End Breadcrumbs -->
+  <section class="inner-page">
+    <div class="container">
+      <div class="details content">
+        <h2>
+          <%= blog.title %>
+        </h2>
+        <% if(blog.author) {%>
+          <h4>By <%= blog.author.fname %>
+          </h4>
+          <%}%>
+            <div class="content">
+              <p>
+                <%= blog.body %>
+              </p>
+            </div>
+            <% if(user && (blog.author)){ %>
+              <% if(user._id.equals(blog.author._id)) {%>
+                <a class="delete" data-doc="<%= blog._id %>">
+                  <img src="/trashcan.svg" alt="delete icon">
+                </a>
+                <% }} %>
+      </div>
+    </div>
+  </section>
+
+</main><!-- End #main -->
+
+<script>
+    const trashcan = document.querySelector('a.delete');
+
+    trashcan.addEventListener('click', (e) => {
+      const endpoint = `/blogs/${trashcan.dataset.doc}`;
+
+      fetch(endpoint, {
+        method: 'DELETE',
+      })
+      .then(response => response.json())
+      .then(data => {
+        if(data.redirect){
+          window.location.href = data.redirect
+        }
+        else if(data.error){
+          document.write(data.error);
+        }
+      })
+      .catch(err => console.log(err));
+    });
+    
+  </script>
+
+<%- include('partials/footer'); -%>

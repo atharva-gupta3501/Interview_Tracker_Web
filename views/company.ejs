@@ -1,0 +1,112 @@
+<%- include('partials/header'); -%>
+    <link rel="stylesheet" href="/company.css">
+    <%- include('partials/nav'); -%>
+        <main id="main">
+
+            <!-- ======= Breadcrumbs ======= -->
+            <section class="breadcrumbs">
+                <div class="container">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2>
+                            <%= title%>
+                        </h2>
+                        <ol>
+                            <li><a href="/">Home</a></li>
+                            <li>
+                                <%= title%>
+                            </li>
+                        </ol>
+                    </div>
+
+                </div>
+            </section><!-- End Breadcrumbs -->
+
+            <section class="inner-page">
+                <div class="container">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                        data-whatever="@mdo">Add
+                        a New Company</button>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="exampleModalLabel">Add a new Company
+                                    </h3>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="/companies" method="POST" enctype="multipart/form-data">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="companytitle" class="col-form-label">Company
+                                                Title</label>
+                                            <input type="text" class="form-control" id="companytitle"
+                                                name="companytitle">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="companybody" class="col-form-label">About:</label>
+                                            <textarea class="form-control" id="companybody"
+                                                name="companybody"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="companylink" class="col-form-label">Link to
+                                                Website:</label>
+                                            <textarea class="form-control" id="companylink"
+                                                name="companylink"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="image">Upload Image</label>
+                                            <input type="file" id="image" name="image" value="" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <input type="submit" class="btn btn-primary" value="Add Company">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <% if (list.length> 0) { %>
+                        <% list.forEach(company=> { %>
+
+                            <a class="single" href="<%= company.link %>">
+                                <div class="col-sm-4">
+                                    <div class="card">
+                                        <div class="image">
+                                            <img <% if (company.img) { %>
+                                            src="data:image/<%=company.img.contentType%>;base64,
+                                                <%=company.img.data.toString('base64')%>"
+                                                    <% } else { %>
+                                                        src = "#"
+                                                        <% } %>
+                                                            >
+                                        </div>
+                                        <div class="card-inner">
+                                            <div class="header">
+                                                <h2>
+                                                    <%= company.title %>
+                                                </h2>
+                                                <!-- <h3>Sub-Head</h2> -->
+                                            </div>
+                                            <div class="content">
+                                                <p>
+                                                    <%= company.about %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <% }) %>
+                                <% } %>
+                </div>
+            </section>
+
+        </main><!-- End #main -->
+        <%- include('partials/footer'); -%>
